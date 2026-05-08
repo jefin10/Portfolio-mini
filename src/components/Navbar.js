@@ -3,78 +3,71 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+const links = [
+  { href: '/',         label: 'Home' },
+  { href: '/about',    label: 'About' },
+  { href: '/skills',   label: 'Skills' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/contact',  label: 'Contact' },
+];
+
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const isActive = (path) => {
-    return pathname === path;
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
 
   return (
-    <nav className="p-4 text-white bg-black">
-      <div className="container flex items-center justify-between mx-auto">
-        <div className="hidden space-x-8 md:flex">
-          <Link href="/" className={`transition-colors cursor-pointer ${isActive('/') ? 'text-amber-500' : 'hover:text-amber-500'}`}>
-            Home
-          </Link>
-          <Link href="/about" className={`transition-colors cursor-pointer ${isActive('/about') ? 'text-amber-500' : 'hover:text-amber-500'}`}>
-            About
-          </Link>
-          <Link href="/skills" className={`transition-colors cursor-pointer ${isActive('/skills') ? 'text-amber-500' : 'hover:text-amber-500'}`}>
-            Skills
-          </Link>
-          <Link href="/projects" className={`transition-colors cursor-pointer ${isActive('/projects') ? 'text-amber-500' : 'hover:text-amber-500'}`}>
-            Projects
-          </Link>
-          <Link href="/contact" className={`transition-colors cursor-pointer ${isActive('/contact') ? 'text-amber-500' : 'hover:text-amber-500'}`}>
-            Contact
-          </Link>
+    <nav style={{ borderBottom: '1px solid var(--border)' }}>
+      <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+        <Link
+          href="/"
+          className="font-mono text-sm tracking-widest font-semibold"
+          style={{ color: 'var(--accent)' }}
+        >
+          JF
+        </Link>
+
+        <div className="hidden md:flex items-center gap-8">
+          {links.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="text-sm transition-colors duration-200 hover-fg"
+              style={{ color: pathname === href ? 'var(--accent)' : 'var(--fg-muted)' }}
+            >
+              {label}
+            </Link>
+          ))}
         </div>
-       
-        <div className="md:hidden">
-          <button onClick={toggleMenu} className="focus:outline-none">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
-        </div>
-       
-        <div className="hidden md:block">
-          <span>Email: <span className="text-amber-500">jefinfrancis10@gmail.com</span></span>
-        </div>
+
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden p-1 transition-colors duration-200"
+          style={{ color: 'var(--fg-muted)' }}
+          aria-label="Toggle menu"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {isOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </div>
-     
-      {isMenuOpen && (
-        <div className="py-2 bg-black md:hidden">
-          <div className="container flex flex-col mx-auto space-y-2">
-            <Link href="/" onClick={closeMenu} className={`block px-4 py-2 rounded cursor-pointer ${isActive('/') ? 'text-amber-500' : 'hover:text-amber-500'} hover:bg-gray-800`}>
-              Home
+
+      {isOpen && (
+        <div className="md:hidden pb-3" style={{ borderTop: '1px solid var(--border)' }}>
+          {links.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setIsOpen(false)}
+              className="block px-6 py-3 text-sm transition-colors duration-200 hover-fg"
+              style={{ color: pathname === href ? 'var(--accent)' : 'var(--fg-muted)' }}
+            >
+              {label}
             </Link>
-            <Link href="/about" onClick={closeMenu} className={`block px-4 py-2 rounded cursor-pointer ${isActive('/about') ? 'text-amber-500' : 'hover:text-amber-500'} hover:bg-gray-800`}>
-              About
-            </Link>
-            <Link href="/skills" onClick={closeMenu} className={`block px-4 py-2 rounded cursor-pointer ${isActive('/skills') ? 'text-amber-500' : 'hover:text-amber-500'} hover:bg-gray-800`}>
-              Skills
-            </Link>
-            <Link href="/projects" onClick={closeMenu} className={`block px-4 py-2 rounded cursor-pointer ${isActive('/projects') ? 'text-amber-500' : 'hover:text-amber-500'} hover:bg-gray-800`}>
-              Projects
-            </Link>
-            <Link href="/contact" onClick={closeMenu} className={`block px-4 py-2 rounded cursor-pointer ${isActive('/contact') ? 'text-amber-500' : 'hover:text-amber-500'} hover:bg-gray-800`}>
-              Contact
-            </Link>
-            <div className="px-4 py-2 mt-2 border-t border-gray-700">
-              <span>Email: <span className="text-amber-500">jefinfrancis10@gmail.com</span></span>
-            </div>
-          </div>
+          ))}
         </div>
       )}
     </nav>

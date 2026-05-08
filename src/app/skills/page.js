@@ -1,83 +1,48 @@
 import Navbar from '@/components/Navbar'
-import React from 'react'
 
-const Page = () => {
+const skills = [
+  { category: 'Languages',      items: ['JavaScript', 'TypeScript', 'Python', 'Dart', 'C', 'C++', 'SQL'] },
+  { category: 'Frontend',       items: ['React.js', 'Next.js', 'Tailwind CSS', 'HTML5', 'CSS3'] },
+  { category: 'Backend',        items: ['Node.js', 'Express.js', 'Django', 'Flask', 'FastAPI'] },
+  { category: 'Mobile',         items: ['React Native', 'Flutter', 'Riverpod'] },
+  { category: 'Machine Learning', items: ['TensorFlow', 'Keras', 'Scikit-learn', 'NumPy', 'pandas', 'OpenCV', 'MediaPipe', 'Matplotlib'] },
+  { category: 'Databases',      items: ['MongoDB', 'PostgreSQL', 'MySQL', 'Supabase', 'Firebase'] },
+  { category: 'Cloud & DevOps', items: ['AWS (EC2, S3)', 'Docker', 'CI/CD', 'Linux'] },
+  { category: 'Tools',          items: ['Git', 'GitHub', 'REST APIs', 'Postman', 'Agile', 'Scrum', 'Microservices'] },
+];
+
+export default function SkillsPage() {
   return (
-    <div className="flex flex-col h-screen overflow-hidden text-white bg-black">
+    <div className="min-h-screen" style={{ color: 'var(--fg)', background: 'var(--bg)' }}>
       <Navbar />
-      <div className="flex items-center justify-center flex-grow w-full">
-        <div className="container px-6 mx-auto">
-          <div className="mb-8 text-center">
-            <h1 className="text-4xl font-bold md:text-5xl">
-            </h1>
-          </div>
+      <main className="max-w-3xl mx-auto px-6 py-16">
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
-            {/* Programming Languages */}
-            <div className="p-3 transition-all border border-gray-800 rounded-lg hover:border-amber-500">
-              <h2 className="mb-2 text-lg font-bold text-amber-500">Programming Languages</h2>
-              <ul className="space-y-1 text-sm">
-                <li>Python</li>
-                <li>JavaScript</li>
-                <li>TypeScript</li>
-                <li>C++</li>
-                <li>C</li>
-                <li>Java</li>
-                <li>PHP</li>
-              </ul>
-            </div>
+        <h1 className="text-xs font-mono uppercase tracking-widest mb-10 fade-up fade-up-1" style={{ color: 'var(--accent)' }}>
+          Skills
+        </h1>
 
-            {/* Web Development */}
-            <div className="p-3 transition-all border border-gray-800 rounded-lg hover:border-amber-500">
-              <h2 className="mb-2 text-lg font-bold text-amber-500">Web Development</h2>
-              <ul className="space-y-1 text-sm">
-                <li>React JS</li>
-                <li>Next.js</li>
-                <li>HTML5</li>
-                <li>CSS3</li>
-                <li>Tailwind</li>
-                <li>Node JS</li>
-                <li>Express JS</li>
-              </ul>
+        <div className="fade-up fade-up-2">
+          {skills.map(({ category, items }, i) => (
+            <div
+              key={i}
+              className="flex flex-col sm:flex-row py-5 gap-3 sm:gap-8"
+              style={{ borderTop: '1px solid var(--border)' }}
+            >
+              <p
+                className="text-sm font-medium shrink-0 w-36"
+                style={{ color: 'var(--fg)' }}
+              >
+                {category}
+              </p>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--fg-muted)' }}>
+                {items.join(' · ')}
+              </p>
             </div>
-
-            {/* Machine Learning */}
-            <div className="p-3 transition-all border border-gray-800 rounded-lg hover:border-amber-500">
-              <h2 className="mb-2 text-lg font-bold text-amber-500">Machine Learning</h2>
-              <ul className="space-y-1 text-sm">
-                <li>Scikit-Learn</li>
-                <li>NumPy</li>
-                <li>OpenCV</li>
-                <li>MediaPipe</li>
-                <li>Pandas</li>
-              </ul>
-            </div>
-
-            {/* Tools & Technologies */}
-            <div className="p-3 transition-all border border-gray-800 rounded-lg hover:border-amber-500">
-              <h2 className="mb-2 text-lg font-bold text-amber-500">Tools & Technologies</h2>
-              <ul className="space-y-1 text-sm">
-                <li>Git</li>
-                <li>GitHub</li>
-                <li>VS Code</li>
-                <li>Linux</li>
-              </ul>
-            </div>
-
-            {/* Databases */}
-            <div className="p-3 transition-all border border-gray-800 rounded-lg hover:border-amber-500">
-              <h2 className="mb-2 text-lg font-bold text-amber-500">Databases</h2>
-              <ul className="space-y-1 text-sm">
-                <li>MySQL</li>
-                <li>MongoDB</li>
-                <li>SQLite</li>
-              </ul>
-            </div>
-          </div>
+          ))}
+          <div style={{ borderTop: '1px solid var(--border)' }} />
         </div>
-      </div>
-    </div>
-  )
-}
 
-export default Page
+      </main>
+    </div>
+  );
+}
